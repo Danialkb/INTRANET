@@ -20,8 +20,6 @@ public class Course implements Serializable{
     private Integer credits;
 
     private String description;
-    
-    private File courseFiles;
 
     private FacultyNames faculty;
  
@@ -38,8 +36,6 @@ public class Course implements Serializable{
 	private Vector<Student> allStuds;
     
     private String prerequisite;
-
-    private Integer year;
     
     private Teacher teacher;
 
@@ -50,7 +46,7 @@ public class Course implements Serializable{
     private CourseType type;
     
     public Course(String name, String code, Integer credits, String description, 
-    		FacultyNames faculty, Integer limit, String prerequisite, Integer year, 
+    		FacultyNames faculty, Integer limit, String prerequisite, 
     		int curNumStuds, CourseType ct) {
 		super();
 		this.name = name;
@@ -60,7 +56,6 @@ public class Course implements Serializable{
 		this.faculty = faculty;
 		this.limit = limit;
 		this.prerequisite = prerequisite;
-		this.year = year;
 		this.curNumStuds = curNumStuds;
 		this.type = ct;
 	}
@@ -81,15 +76,7 @@ public class Course implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public File getCourseFiles() {
-		return courseFiles;
-	}
-
-	public void setCourseFiles(File courseFiles) {
-		this.courseFiles = courseFiles;
-	}
-
+	
 	public Vector<Vector<Lesson>> getLessons() {
 		return lessons;
 	}
@@ -120,14 +107,6 @@ public class Course implements Serializable{
 
 	public void setPrerequisite(String prerequisite) {
 		this.prerequisite = prerequisite;
-	}
-
-	public Integer getYear() {
-		return year;
-	}
-
-	public void setYear(Integer year) {
-		this.year = year;
 	}
 
 	public Integer getLimit() {
@@ -187,8 +166,6 @@ public class Course implements Serializable{
 	public void setCurNumStuds(int curNumStuds) {
 		this.curNumStuds = curNumStuds;
 	}
-	
-	
 
     public void addStudent(Student s) {
     	if(!allStuds.contains(s))

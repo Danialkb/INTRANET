@@ -20,6 +20,7 @@ public class User implements Comparable<User>, Serializable, Cloneable {
     public User(String password, String fullname, String id) {
     	this.password = this.hashPassword(password);
     	this.fullName = fullname;
+    	this.id = id;
     	this.username = this.genUsername(fullName);
     	this.mail = this.username + "@kbtu.kz";
     }
@@ -56,8 +57,10 @@ public class User implements Comparable<User>, Serializable, Cloneable {
     
     public void viewNews() {
         Vector<News> n = Database.getDB().getNews();
+        int pos = 1;
         for(News i: n) {
-        	System.out.println(i.getTitle());
+        	System.out.println(pos + ". " + i.getTitle());
+        	pos++;
         }
     }
     

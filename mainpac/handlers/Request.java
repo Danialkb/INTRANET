@@ -12,23 +12,22 @@ import users.Student;
 public class Request implements Serializable {
     private Date date;
     
-    private SemestrType semestr;
-
     private RequestType type;
 
     private RequestStatus status;
 
     private Student FROM;
-
-    private Student student;
     
     private File file;
  
-    public Request(Date d, SemestrType sem, RequestType rt, RequestStatus status) {
-    	this.date = d;
-    	this.semestr = sem;
+    public Request(RequestType rt, Student f) {
     	this.type = rt;
-    	this.status = status;
+    	this.FROM = f;
+    }
+    
+    {
+    	this.status = RequestStatus.PROCESSING;
+    	this.date = new Date();
     }
 
     public Date getDate() {
@@ -39,13 +38,6 @@ public class Request implements Serializable {
 		this.date = date;
 	}
 
-	public SemestrType getSemestr() {
-		return semestr;
-	}
-
-	public void setSemestr(SemestrType semestr) {
-		this.semestr = semestr;
-	}
 
 	public RequestType getType() {
 		return type;
@@ -70,14 +62,6 @@ public class Request implements Serializable {
 	public void setFROM(Student fROM) {
 		FROM = fROM;
 	}
-
-	public Student getStudent() {
-		return student;
-	}
-
-	public void setStudent(Student student) {
-		this.student = student;
-	}
 	
 	
 
@@ -91,8 +75,8 @@ public class Request implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Request [date=" + date + ", semestr=" + semestr + ", type=" + type + ", status=" + status + ", FROM="
-				+ FROM + ", student=" + student + "]";
+		return "Request [date=" + date + ", type=" + type + ", status=" + status + ", FROM="
+				+ FROM.getFullName() + " " + FROM.getId() + "]";
 	}
 	
     

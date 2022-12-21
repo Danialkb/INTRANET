@@ -4,17 +4,17 @@ import java.io.Serializable;
 import users.Student;
 
 public class Mark implements Serializable {
-    private Double firstAttestation;
+    private Double firstAttestation = null;
 
-    private Double secondAttestation;
+    private Double secondAttestation = null;
 
     private String mark;
 
-    private Double finalexam;
+    private Double finalexam = null;
     
-    private Double gpa;
+    private Double gpa = null;
     
-    private Double totalAttestation;
+    private Double totalAttestation = 0.0;
     
     public Mark(double firstAttestation) {
 		super();
@@ -31,13 +31,13 @@ public class Mark implements Serializable {
 		this.finalexam = finalexam;
 	}
     
-    {
-    	this.firstAttestation = null;
-    	this.secondAttestation = null;
-    	this.finalexam = null;
-    	this.totalAttestation = 0.0;
-    	this.gpa = null;
-    }
+//    {
+//    	this.firstAttestation = null;
+//    	this.secondAttestation = null;
+//    	this.finalexam = null;
+//    	this.totalAttestation = 0.0;
+//    	this.gpa = null;
+//    }
 
 
 	public Double getFirstAttestation() {
@@ -80,6 +80,7 @@ public class Mark implements Serializable {
 
 
 	public Double getFinalexam() {
+		
 		return finalexam;
 	}
 

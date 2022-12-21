@@ -55,6 +55,14 @@ public class Teacher extends Employee implements Serializable{
         	System.out.println(i.getFullName() + " " + i.getId());
         }
     }
+	
+	public Vector<Student> getStudents(Course c) {    
+		Vector<Student> studs = new Vector<Student>();
+        for(Student i: c.getStudents().get(this)) {
+        	studs.add(i);
+        }
+        return studs;
+    }
 
 	public TeacherType getType() {
 		return type;

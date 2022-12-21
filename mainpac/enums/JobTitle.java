@@ -1,5 +1,5 @@
 package enums;
 
 public enum JobTitle {
-	TEACHER, ADMIN, EMPLOYEE
+	TEACHER, ADMIN, MANAGER
 }

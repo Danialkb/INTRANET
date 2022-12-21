@@ -7,7 +7,7 @@ import enums.CourseStatus;
 import users.Student;
 
 public class Transcript implements Serializable {
-	private double gpa;
+	private Double gpa;
 
     private HashMap<Course, Mark>  transcript = new HashMap<Course, Mark>();
 
@@ -32,7 +32,7 @@ public class Transcript implements Serializable {
 		return transcript;
 	}
 	
-	public double getGpa() {
+	public Double getGpa() {
 		this.gpa = this.calculateGpa();
 		return this.gpa;
 	}
@@ -58,12 +58,14 @@ public class Transcript implements Serializable {
         double total = 0.0;
         
         for(Course c: this.transcript.keySet()) {
-        	if(this.transcript.get(c).getFinalexam() != null) {
-        		total += this.transcript.get(c).getGPA();
-        		if(this.transcript.get(c).getGPA() == 0.0)
-        			c.setStatus(CourseStatus.RETAKE);
-        		else
-        			c.setStatus(CourseStatus.FINISHED);
+        	if(this.transcript.get(c) != null) {
+        		if(this.transcript.get(c).getFinalexam() != null) {
+	        		total += this.transcript.get(c).getGPA();
+	        		if(this.transcript.get(c).getGPA() == 0.0)
+	        			c.setStatus(CourseStatus.RETAKE);
+	        		else
+	        			c.setStatus(CourseStatus.FINISHED);
+        		}
         	}
         }
         
@@ -73,7 +75,11 @@ public class Transcript implements Serializable {
 	 public String toString() {
 		 String ans = "";
 		 for(Course c: this.transcript.keySet()) {
-			 ans += c.getName() + " " + " " + this.transcript.get(c).getTotalAttestation() + this.transcript.get(c).getMark() + "\n";
+			 if(this.transcript.get(c) != null) {
+				 ans += c.getName() + " " + " " 
+			 + this.transcript.get(c).getTotalAttestation() 
+			 + this.transcript.get(c).getMark() + "\n";
+			 }
 		 }
 		    return
 		        "Transcript: " + ans + 

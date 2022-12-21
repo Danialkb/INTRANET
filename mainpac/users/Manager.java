@@ -63,14 +63,19 @@ public class Manager extends Employee implements Serializable, ManageCourses{
         }
     }
    
-    public boolean approveRegistration(Student s, Course c) {
+    public static boolean approveRegistration(Student s, Course c) {
         HashMap<Course, Mark> hm = s.getTranscript().getTranscript();
         String pre = c.getPrerequisite();
         if(pre == null)return true;
         for(Course cur: hm.keySet()) {
         	if(cur.getCode().equals(pre)) {
-        		if(hm.get(cur).getFinalexam() >= 20.0)
-        			return true;
+        		if(hm.get(cur) != null) {
+        			if(hm.get(cur).getFinalexam() >= 20.0) {
+        				return true;
+        			}
+        			else
+        				return false;
+        		}
         		else
         			return false;
         	}

@@ -43,16 +43,14 @@ public class Student extends User implements ManageCourses, Serializable{
     
     private boolean passedQuestionary;
     
-    private String id;
-    
     public Student(String password, String fullname, String id, Integer yearOfStudy,
 			StudentDegree degree, FacultyNames faculty, String phoneNumber,Speciality speciality) {
 		super(password, fullname, id);
 		this.yearOfStudy = yearOfStudy;
-		this.id = id;
 		this.degree = degree;
 		this.faculty = faculty;
 		this.phoneNumber = phoneNumber;
+		this.speciality = speciality;
 	}
     
     {
@@ -73,8 +71,10 @@ public class Student extends User implements ManageCourses, Serializable{
 	}
 
 	public void viewCourses() {
+		int i = 1;
         for(Course c: this.courses.keySet()) {
-        	System.out.println(c.getCode() + " " + c.getName() + " " + this.courses.get(c));
+        	System.out.println(i + ". " + c.getCode() + " " + c.getName() + " " + this.courses.get(c));
+        	i++;
         }
     }
     
@@ -105,6 +105,9 @@ public class Student extends User implements ManageCourses, Serializable{
     	if(c.getFaculty() == this.faculty  && this.totalCredits + c.getCredits() < 30 && this.courses.size() <= 6 && c.getCurNumStuds() != c.getLimit()) {
     		courses.put(c, CourseStatus.RUNNING);
     		this.transcript.getTranscript().put(c, null);
+    	}
+    	else {
+    		System.out.println("You can't join this course");
     	}
     }
 
@@ -141,12 +144,8 @@ public class Student extends User implements ManageCourses, Serializable{
     	System.out.println(this.transcript);
     }
 
-    public void rateTeacher(Vector<Integer> rate) {
-    	Vector<Teacher> teachers = this.getTeachers();
-        for(int i = 0; i < teachers.size(); i++) {
-        	teachers.elementAt(i).setRate(rate.elementAt(i));
-        }
-        this.setQuestionary(true);
+    public void rateTeacher(Teacher t, Integer rate) {
+    	t.setRate(rate);
     }
 
     public void addRequest(Request r) {
@@ -160,8 +159,18 @@ public class Student extends User implements ManageCourses, Serializable{
     			System.out.println(r);
     	}
     }
+    
+    
 
-    public boolean takeBook(Book b) {
+    public HashMap<Course, Vector<Lesson>> getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(HashMap<Course, Vector<Lesson>> schedule) {
+		this.schedule = schedule;
+	}
+
+	public boolean takeBook(Book b) {
         return Librarian.giveBooks(this, b);
     }
     
@@ -178,7 +187,17 @@ public class Student extends User implements ManageCourses, Serializable{
     	}
     }
     
-    public boolean pickLessons(Teacher t, Course c, Lesson l) {
+    
+    
+    public HashMap<Course, CourseStatus> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(HashMap<Course, CourseStatus> courses) {
+		this.courses = courses;
+	}
+
+	public boolean pickLessons(Teacher t, Course c, Lesson l) {
 		if(l.getLimit() <= 0)
 			return false;
         for(Course cur: this.schedule.keySet()) {
@@ -239,9 +258,8 @@ public class Student extends User implements ManageCourses, Serializable{
     
     @Override
     public String toString() {
-    	return "Student " + this.getFullName() + " " + this.getId() + ", [yearOfStudy=" + yearOfStudy + ", degree=" + degree + ", faculty=" + faculty + ", membership="
-    			+ membership + ", courses=" + courses + ", transcript=" + transcript + ", phoneNumber=" + phoneNumber
-    			+ ", schedule=" + schedule + ", speciality=" + speciality + ", totalCredits=" + totalCredits + "]";
+    	return "Student " + this.getFullName() + " " + this.getId() + ", [yearOfStudy=" + yearOfStudy + ", degree=" + degree + ", faculty=" + faculty + ", phoneNumber=" + phoneNumber
+    		 + ", speciality=" + speciality.getName() + ", totalCredits=" + totalCredits + "]";
     }
 
     
