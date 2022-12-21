@@ -4,7 +4,7 @@ import java.io.Serializable;
 import users.Student;
 
 public class Mark implements Serializable {
-    private Double firstAttestation = null;
+    private Double firstAttestation;
 
     private Double secondAttestation = null;
 
@@ -19,6 +19,7 @@ public class Mark implements Serializable {
     public Mark(double firstAttestation) {
 		super();
 		this.firstAttestation = firstAttestation;
+		this.totalAttestation += this.firstAttestation;
 	}
     
     public Mark(double firstAttestation, double secondAttestaion) {
@@ -32,7 +33,6 @@ public class Mark implements Serializable {
 	}
     
 //    {
-//    	this.firstAttestation = null;
 //    	this.secondAttestation = null;
 //    	this.finalexam = null;
 //    	this.totalAttestation = 0.0;
@@ -93,8 +93,8 @@ public class Mark implements Serializable {
 				"D", "D+", "C-", "C", "C+", "B-", "B", "B+", "A-", "A"};
 		double[] marks1 = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
 				1.0, 1.33, 1.67, 2.0, 2.33, 2.67, 3.0, 3.33, 3.67, 4.0};
-		this.setMark(marks[(int)(Math.round((this.totalAttestation) / 5))]);
-		this.setGPA(marks1[(int)(Math.round((this.totalAttestation) / 5))]);
+		this.setMark(marks[(int)(Math.round(((Math.round(this.totalAttestation)) / 5)))]);
+		this.setGPA(marks1[(int)(Math.round(Math.round((this.totalAttestation)) / 5))]);
 	}
 	
 

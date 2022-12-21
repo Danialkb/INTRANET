@@ -2,8 +2,10 @@ package UsersDemo;
 
 
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
 import java.nio.charset.CoderMalfunctionError;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,6 +23,7 @@ import enums.JobTitle;
 import enums.LessonType;
 import enums.ManagerTitle;
 import enums.StudentDegree;
+import enums.TeacherType;
 import handlers.Database;
 import handlers.News;
 import handlers.Speciality;
@@ -48,6 +51,11 @@ public class Menu {
 		Database.getDB().addCourse(c3);
 		Database.getDB().addCourse(c4);
 		Database.getDB().addCourse(c5);
+		
+//		c1.addFile(null, null);
+		
+		Teacher pakita = new Teacher("123", "Pakizar Shamoi", "6B3092", 1000000, JobTitle.TEACHER, TeacherType.PROFESSOR);
+		
 		HashMap<Course, Vector<Lesson>> sc = new HashMap<Course, Vector<Lesson>>();
 		Vector<Lesson> l1 = new Vector<Lesson>();
 		l1.add(new Lesson("461", LessonType.LECTURE, new TimeSlot(Days.MON, 14, 16), 100));
@@ -67,8 +75,14 @@ public class Menu {
 		News n2 = new News("Some title new", "Some description new", new Date());
 		Database.getDB().addNews(n1);
 		Database.getDB().addNews(n2);
+//		System.out.println(pakita.getUsername());
+		Database.getDB().addUser(pakita);
 		Manager m = new Manager("123", "Valeriya Li", "6B03218", 300000, JobTitle.MANAGER, ManagerTitle.OR);
-		
+		Database.getDB().addUser(m);
+		m.setCourseForTeacher(pakita, c1, l1);
+		m.setCourseForTeacher(pakita, c2, l2);
+		c1.getStudents().put(pakita, Database.getDB().getStudent());
+		c2.getStudents().put(pakita, Database.getDB().getStudent());
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 			
@@ -114,5 +128,12 @@ public class Menu {
 		} catch (IOException exception) {
             System.out.println("Exception");
         }
+		
+		FileOutputStream fos = new FileOutputStream("myser.ser");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(Database.getDB());
+		oos.flush();
+		oos.close();
+		
 	}	
 }	

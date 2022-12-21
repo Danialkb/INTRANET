@@ -1,17 +1,19 @@
 package handlers;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 import java.util.Vector;
 import java.util.stream.Collectors;
 
 import coursecomponents.Course;
+import users.Employee;
 import users.Manager;
 import users.Student;
 import users.Teacher;
 import users.User;
 
-public final class Database {
+public final class Database implements Serializable{
 	
 	private Vector<Speciality> specialities;
 
@@ -48,7 +50,12 @@ public final class Database {
     public Vector<News> getNews() {
         return news;
     }
-
+    
+    public Vector<Employee> getEmployee() {
+    	if(users == null)return null;
+        return users.stream().filter(u -> u instanceof Employee).
+        		map(u -> (Employee) u).collect(Collectors.toCollection(Vector::new));
+    }
 
     public Vector<Student> getStudent() {
     	if(users == null)return null;

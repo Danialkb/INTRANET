@@ -3,6 +3,7 @@ import java.util.Vector;
 
 import enums.JobTitle;
 import handlers.CanSendMessage;
+import handlers.Database;
 import handlers.Message;
 
 
@@ -31,17 +32,33 @@ public class Employee extends User implements CanSendMessage{
     	messages.add(s);
     }
     
-    public void sendMessage(Employee e, String s) {
-    	this.sendMessages.add(new Message(this, e, s));
-        e.getMessage(new Message(this, e, s));
+    public void sendMessage(String email, String s) {
+    	Employee e = null;
+    	for(Employee e1: Database.getDB().getEmployee()) {
+    		if(e1.getMail().equals(email)) {
+    			e = e1;
+    			break;
+    		}
+    	}
+    	if(e == null) {
+    		System.out.println("No such email!");
+    	}
+    	else {
+	    	this.sendMessages.add(new Message(this, e, s));
+	        e.getMessage(new Message(this, e, s));
+    	}
     }
 
-    public Vector<Message> viewMessages() {
-        return this.messages;
+    public void viewMessages() {
+        for(Message m: this.messages) {
+        	System.out.println(m);
+        }
     }
     
-    public Vector<Message> viewSentMessages() {
-        return this.sendMessages;
+    public void viewSentMessages() {
+    	for(Message m: this.sendMessages) {
+        	System.out.println(m);
+        }
     }
 
 	public double getSalary() {

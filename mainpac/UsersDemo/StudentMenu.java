@@ -227,8 +227,6 @@ public class StudentMenu {
 							break;
 						else {
 							System.out.println(Database.getDB().getNews().elementAt(in.charAt(0) - 49).getDescribtion());
-							System.out.println("Write something to go back");
-							in = br.readLine();
 						}
 					}
 					

@@ -14,7 +14,8 @@ import enums.MarkType;
 import enums.TeacherType;
 
 public class Teacher extends Employee implements Serializable{
-    private TeacherType type;
+
+	private TeacherType type;
 
     
     private int sumRating = 0;
@@ -51,9 +52,35 @@ public class Teacher extends Employee implements Serializable{
     
 
 	public void viewStudents(Course c) {        
+		int pos = 1;
         for(Student i: c.getStudents().get(this)) {
-        	System.out.println(i.getFullName() + " " + i.getId());
+        	System.out.println(pos + ". " + i.getFullName() + " " + i.getId());
+        	pos++;
         }
+    }
+	
+	public void viewCourses(){
+		int pos = 1;
+		for(Course c: this.schedule.keySet()) {
+			System.out.println(pos + ". " + c.getName());
+			pos++;
+		}
+		
+	}
+	
+	public void viewSchedule() {
+    	for(Course c: this.schedule.keySet()) {
+    		System.out.println(c.getName());
+    		for(Lesson l: this.schedule.get(c)) {
+    			System.out.println(l);
+    		}
+    	}
+    }
+	
+	public void viewCourseFiles(Course c) {
+    	for(File f: c.getFiles().get(this)) {
+    		System.out.println(f);
+    	}
     }
 	
 	public Vector<Student> getStudents(Course c) {    
@@ -123,7 +150,5 @@ public class Teacher extends Employee implements Serializable{
 		return countStudentsRated == other.countStudentsRated && Objects.equals(rating, other.rating)
 				&& Objects.equals(schedule, other.schedule) && sumRating == other.sumRating && type == other.type;
 	}
-	
-	
     
 }

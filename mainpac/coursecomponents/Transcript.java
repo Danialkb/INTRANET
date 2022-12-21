@@ -39,28 +39,30 @@ public class Transcript implements Serializable {
 
 
 	public Integer getTotalCredits() {
-		return totalCredits;
+		return this.totalCredits;
 	}
 
 	public void setTotalCredits(Integer totalCredits) {
 		this.totalCredits = totalCredits;
 	}
 
-	public void setTotalCredits() {
+	private void setTotalCredits() {
 		for(Course c: this.transcript.keySet()) {
-			if(this.transcript.get(c).getFinalexam() != null) {
-				this.totalCredits += c.getCredits();
+			if(this.transcript.get(c) != null) {
+				if(this.transcript.get(c).getFinalexam() != null) {
+					this.totalCredits += c.getCredits();
+				}
 			}
 		}
 	}
 	
-	private double calculateGpa() {
+	private Double calculateGpa() {
         double total = 0.0;
-        
+        this.setTotalCredits();
         for(Course c: this.transcript.keySet()) {
         	if(this.transcript.get(c) != null) {
         		if(this.transcript.get(c).getFinalexam() != null) {
-	        		total += this.transcript.get(c).getGPA();
+	        		total += this.transcript.get(c).getGPA() * c.getCredits();
 	        		if(this.transcript.get(c).getGPA() == 0.0)
 	        			c.setStatus(CourseStatus.RETAKE);
 	        		else
@@ -68,7 +70,8 @@ public class Transcript implements Serializable {
         		}
         	}
         }
-        
+        if(this.totalCredits == 0)
+        	return null;
         return total / this.totalCredits;
     }
 	
@@ -77,14 +80,14 @@ public class Transcript implements Serializable {
 		 for(Course c: this.transcript.keySet()) {
 			 if(this.transcript.get(c) != null) {
 				 ans += c.getName() + " " + " " 
-			 + this.transcript.get(c).getTotalAttestation() 
+			 + this.transcript.get(c).getTotalAttestation() + " " + this.transcript.get(c).getGPA() + " "
 			 + this.transcript.get(c).getMark() + "\n";
 			 }
 		 }
 		    return
 		        "Transcript: " + ans + 
-		        "Total Credits: " + this.getTotalCredits() + 
-		        "\nGPA: " + this.getGpa();
+		        "\nGPA: " + this.getGpa() +
+		        "\nTotal Credits: " + this.getTotalCredits();
 	  } 
     
 }

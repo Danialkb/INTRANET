@@ -13,8 +13,6 @@ public class Message implements Serializable {
     private Employee TO;
     
     private Date DATE;
-
-    private Employee employee;
     
     public Message(Employee from, Employee to, String text) {
     	this.FROM = from;
@@ -27,8 +25,7 @@ public class Message implements Serializable {
     
 	@Override
 	public String toString() {
-		return "Message [text=" + text + ", FROM=" + FROM + ", TO=" + TO + ", DATE=" + DATE + ", employee=" + employee
-				+ "]";
+		return "Message [text=" + text + ", FROM=" + FROM.getFullName() + ", TO=" + TO.getFullName() + ", DATE=" + DATE + "]";
 	}
     
     
