@@ -129,11 +129,7 @@ public class Menu {
             System.out.println("Exception");
         }
 		
-		FileOutputStream fos = new FileOutputStream("myser.ser");
-		ObjectOutputStream oos = new ObjectOutputStream(fos);
-		oos.writeObject(Database.getDB());
-		oos.flush();
-		oos.close();
+		Database.serialize();
 		
 	}	
 }	

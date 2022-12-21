@@ -1,5 +1,11 @@
 package handlers;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashSet;
 
@@ -112,4 +118,37 @@ public final class Database implements Serializable{
 		return null;
 	}
     
+	public static void serialize() {
+		try (FileOutputStream fos = new FileOutputStream("Db.ser")){
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(Database.getDB());
+			oos.flush();
+			oos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void deserialize() {
+		try {
+			FileInputStream fis = new FileInputStream("Db.ser");
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Database inst = (Database)ois.readObject();
+			db = inst;
+			fis.close();
+			ois.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }
